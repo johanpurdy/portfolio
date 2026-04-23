@@ -1,50 +1,109 @@
-# portfolio
-# Артем Марков
-### Python Backend Developer | ML Enthusiast
+# Описание проекта
 
-Я специализируюсь на создании надежных и масштабируемых серверных решений на **Python**. Имею опыт работы с веб-фреймворками (Django, Flask), проектированием архитектуры баз данных и интеграцией нейросетевых моделей для бизнес-задач.
+## Foodgram. 
+## Yandex-Practicum. Python Backend.
 
-- **Опыт:** 2+ года в разработке (фриланс + проектная деятельность в Яндекс Практикуме).
-- **Ключевой фокус:** Автоматизация процессов, оптимизация SQL-запросов и работа с асинхронностью, Web-приложения.
--  **Образование:** Выпускник Яндекс Практикума (Python Backend).
+**Foodgram** — это онлайн‑платформа для публикации и поиска рецептов. Реализует помощь пользователям в поиске рецептов.
 
-### Стек технологий
 
-*   **Languages:** Python (3.9+)
-*   **Web Frameworks:** Django (DRF), Flask
-*   **Databases:** PostgreSQL, SQLAlchemy, SQLite, Alembic/Flask-Migrate
-*   **DevOps & Tools:** Docker, Docker Compose, Nginx, Gunicorn, GitHub Actions (CI/CD)
-*   **Machine Learning:** TensorFlow (анализ и прогноз временных рядов)
-*   **Other:** REST API, JWT, OAuth, aiohttp, DaData API, Bash
+### Контакт
+* Марков Артем Романович
+* TG: @dacbhj
+* Email: artem.markovma@gmail.com
 
-### Основные проекты
+### Стек
+Django + DRF (REST API), React, PostgreSQL, GitHub, 
 
-#### [Yacut](https://github.com) — Сервис сокращения ссылок
-Стек: Flask, SQLAlchemy, aiohttp, Yandex.Disk API
-*   Реализовал асинхронную загрузку файлов в облако через `aiohttp.ClientSession`, что предотвратило блокировку основного потока.
-*   Спроектировал гибкую архитектуру с поддержкой различных СУБД.
 
-#### Agregator_Web
-*Стек: Flask, PostgreSQL, DaData API*
-*   Интегрировал DaData API для автозаполнения адресов, что улучшило UX и исключило ошибки ручного ввода.
+### Запуск на удаленном сервере 
+**добавить на GitHub Repository secrets**
+Settings->Secrets and variables->Actions
+- DOCKER_PASSWORD - пароль на DockerHub
+- DOCKER_USERNAME - логин на DockerHub
+- HOST - IP адрес вашего сервера
+- SSH_KEY - закрытый ключдля подключения к вашему серверу
+- SSH_USER - логин на вашем сервере
+- SSH_PASSPHRASE - пароль от сервера
+- TELEGRAM_TO - id вашего Telegram
 
-#### [Foodgram](https://github.com) — Продуктовый помощник
-Стек: Django, DRF, PostgreSQL, Docker, GitHub Actions
-*   Разработал полноценный REST API с системой подписок, избранным и генерацией списка покупок.
-*   Настроил CI/CD: автоматическая сборка образов и деплой на сервер при пуше в main.
+### На сервере перед развертыванием CI/CD
 
-#### LLM для прогнозирования БД
-Стек: TensorFlow, Python, SQL
-*   Оптимизировал архитектуру нейросети, снизив **Loss с 0.8 до 0.09**.
-*   Внедрил алгоритм пакетной записи прогнозов (batch insert), значительно сократив нагрузку на базу данных.
+cd ~/foodgram/
 
-#### [Homework Bot](https://github.com) — Бот-ассистент студента
-Стек: Python, API, python-telegram-bot, Logging, dotenv
-*   Реализовал автоматический опрос API Яндекс Практикума для мониторинга статуса проверки заданий.
-*   Настроил систему логирования с уведомлением администратора о критических ошибках через Telegram.
-*   Обеспечил отказоустойчивость: бот корректно обрабатывает сетевые сбои и ошибки API без остановки работы.
+нужно создать файл
+- .env
+**Пример наполнения**
+SECRET_KEY=SECRET_KEY
+DEBUG=False
+ALLOWED_HOSTS=127.0.0.1,localhost,89.169.190.216,finalproject.ddns.net
 
-### Как со мной связаться:
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+POSTGRES_USER=django_user
+POSTGRES_PASSWORD=mysecretpassword
+DB_HOST=db
+DB_PORT=5432
 
-*   **Telegram:** [@dacbhj](https://t.me)
-*   **Email:** artem.markovma@gmail.com
+### Загрузка данных на сервер
+
+```
+Загрузка тегов:
+```
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py load_ingredients
+```
+Загрузка ингредиентов:
+```
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py load_tags
+
+### Доступы:
+
+1. **Главная страница:** [http://finalproject.ddns.net](http://localhost)
+2. **API сервер:** [http://finalproject.ddns.net/api](http://localhost/api)  
+3. **Админ-панель:** [http://finalproject.ddns.net/admin](http://localhost/admin)
+
+### Запуск проекта локально
+
+1. **Клонируйте репозиторий:**
+git clone git@github.com:johanpurdy/foodgram.git
+cd foodgram
+
+2. **Создайте и активируйте виртуальное окружение:**
+python -m venv venv
+
+# Windows:
+venv\Scripts\activate
+
+# Linux/Mac:
+source venv/bin/activate
+
+3. **Установите зависимости:**
+cd backend
+pip install -r requirements.txt
+
+4. **Настройте переменные окружения:**
+Создайте файл .env в папке backend/
+
+SECRET_KEY=ваш-secret-key
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=foodgram
+POSTGRES_USER=django_user
+POSTGRES_PASSWORD=mysecretpassword
+DB_HOST=localhost
+DB_PORT=5432
+
+6. **Выполните миграции:**
+python manage.py migrate
+
+7. **Создайте суперпользователя:**
+python manage.py createsuperuser
+
+8. **Загрузите тестовые данные:**
+python manage.py load_ingredients --path "../data/ingredients.csv"
+python manage.py load_tags --path "../data/tags.json"
+
+9. **Запустите сервер разработки:**
+python manage.py runserver
+
